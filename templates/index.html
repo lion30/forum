@@ -3,20 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>论坛首页</title>
+    <link rel="stylesheet" href="/static/bootstrap.min.css" />
 </head>
 <body>
-<h2>Python部落论坛</h2>
-<div>运维专区</div>
-<div>Django专区</div>
-<div>部落建设</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+           <h2>Python部落论坛</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-2">运维专区</div>
+        <div class="col-xs-12 col-md-8">Django专区</div>
+        <div class="col-xs-12 col-md-2">部落建设</div>
+    </div>
+</div>
+
 <input type="text" style="width: 500px" />
 
 
 <input type="text" id="nameInput"/>
-#nameInput{
-    width:500px;
-}
-
 
 <div id="outer">
     <div class="inner left">
