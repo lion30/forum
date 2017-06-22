@@ -15,7 +15,7 @@ Including another URLconf
 """
 
 import django
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from forum.views import htmltemplate, index
 
@@ -23,4 +23,5 @@ urlpatterns = [
 	url(r'^admin/', admin.site.urls),
 	url(r'^htmltemplate/$', htmltemplate),
 	url(r'^index/$', index),
+	url(r'^article/',include('article.urls')),
 ]

@@ -20,8 +20,8 @@
             {% for b in blocks %}
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a href="#" style="font-size: 15px">{{ b.name }}</a>
-                        <span class="pull-right">{{ b.manager }}</span>
+                        <a href="/article/list/{{ b.id }}" style="font-size: 15px">{{ b.name }}</a>
+                        <span class="pull-right">{{ b.manager_name }}</span>
                     </div>
                     <div class="panel-body">{{ b.desc }}</div>
                 </div>
