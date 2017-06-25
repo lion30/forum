@@ -1,5 +1,8 @@
 from django.db import models
 from blocks.models import Block
+import pytz
+
+BEIJING_TZ = pytz.timezone('Asia/Shanghai')
 
 class Article(models.Model):
 	block = models.ForeignKey(Block, verbose_name='版块ID')

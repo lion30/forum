@@ -3,8 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <title>文章列表</title>
+    <link rel="stylesheet" href="/static/bootstrap.min.css" />
 </head>
 <body>
-<h1>文章列表</h1>
+{% extends 'base.html' %}
+{% block content %}
+    {% for item in blocks %}
+        <ol class="breadcrumb">
+            <li><a href="/index">主页</a></li>
+            <li class="active">{{ item.name }}</li>
+        </ol>
+        <a href="/article/create/{{ item.id }}" type="button" class="btn btn-primary">发表文章</a>
+        <br />
+        <br />
+    {% endfor %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>标题</th>
+                <th>作者</th>
+                <th>创建时间</th>
+                <th>最后更新时间</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in articles %}
+                <tr>
+                    <td>{{ article.title }}</td>
+                    <td>{{ article.content }}</td>
+                    <td>{{ article.create_timestamp|date:'Y-m-d P' }}</td>
+                    <td>{{ article.last_update_timestamp|date:'Y-m-d P' }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+        <li>
+          <a href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li>
+          <a href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+{% endblock %}
 </body>
 </html>

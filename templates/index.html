@@ -6,50 +6,22 @@
     <link rel="stylesheet" href="/static/bootstrap.min.css" />
 </head>
 <body>
-
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12 col-md-12">
-            <div class="jumbotron">
-              <center><h1>Python部落论坛</h1></center>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12 col-md-10">
-            {% for b in blocks %}
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <a href="/article/list/{{ b.id }}" style="font-size: 15px">{{ b.name }}</a>
-                        <span class="pull-right">{{ b.manager_name }}</span>
-                    </div>
-                    <div class="panel-body">{{ b.desc }}</div>
+{% extends 'base.html' %}
+{% block content %}
+    <div class="col-xs-12 col-md-10">
+        {% for b in blocks %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a href="/article/list/{{ b.id }}" style="font-size: 15px">{{ b.name }}</a>
+                    <span class="pull-right">{{ b.manager_name }}</span>
                 </div>
-            {% endfor %}
-        </div>
-        <div class="col-xs-12 col-md-2">
-            <div class="well">团队建设</div>
-        </div>
+                <div class="panel-body">{{ b.desc }}</div>
+            </div>
+        {% endfor %}
     </div>
-</div>
-
-<input type="text" style="width: 500px" />
-
-
-<input type="text" id="nameInput"/>
-
-<div id="outer">
-    <div class="inner left">
-        <input type="text"/>
-    </div>    <div class="inner right">
-        <button>赞</button>
+    <div class="col-xs-12 col-md-2">
+        <div class="well">团队建设</div>
     </div>
-</div>
-
-<style type="text/css">
-   .inner{
-    background-color:blue;
-}
-</style>
+{% endblock %}
 </body>
 </html>
