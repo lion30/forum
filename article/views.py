@@ -76,3 +76,11 @@ class ArticleCreateView(View):
 			return redirect('/article/list/%s' % block_id)
 		else:
 			return render(request, self.template_name, {'blocks': self.block, 'form': form})
+
+
+# 利用函数创建文章详情页
+def article_detail(request, article_id):
+	article_id = int(article_id)
+	articles = Article.objects.filter(id=article_id)
+	if request.method == 'GET':
+		return render(request, 'article_detail.html', {'aids': articles})

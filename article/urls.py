@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import article_list, ArticleCreateView
+from .views import article_list, ArticleCreateView, article_detail
 # from .views import articles_create
 
 urlpatterns = [
@@ -8,4 +8,6 @@ urlpatterns = [
 	# url(r'^create/(?P<block_id>\d+)', articles_create),
 	#利用类创建view
 	url(r'^create/(?P<block_id>\d+)', ArticleCreateView.as_view()),
+	#利用函数创建文章详情页
+	url(r'^articledetail/(?P<article_id>\d+)',article_detail),
 ]

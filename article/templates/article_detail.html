@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>article_detail</title>
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+</head>
+<body>
+{% extends 'base.html' %}
+{% block content %}
+<table class="table table-bordered">
+<tbody>
+{% for aid in aids %}
+    <ol class="breadcrumb">
+        <li><a href="/index">主页</a></li>
+        <li><a class="active" href="/article/list/{{ item.id }}">{{ aid.name }}</a></li>
+        <li>{{ aid.title }}</li>
+    </ol>
+    <h5>作者：{{ aid.title }}</h5>
+    <h1>{{ aid.title }}</h1>
+    <h5>{{ aid.content }}</h5>
+{% endfor %}
+</tbody>
+
+</table>
+{% endblock %}
+</body>
+</html>
