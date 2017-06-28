@@ -1,15 +1,40 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
-from blocks.models import Block
-from .models import Article
-from .forms import ArticleForm
 from django.views.generic import View
+
+from blocks.models import Block
+from .forms import ArticleForm
+from .models import Article
 
 
 def article_list(request, block_id):
 	block_id = int(block_id)
 	block = Block.objects.filter(id=block_id)
-	article_objs = Article.objects.filter(block=block, status=0).order_by('-id')
-	return render(request, 'article_list.html', {'articles': article_objs, 'blocks': block})
+	# article_objs = Article.objects.filter(block=block, status=0).order_by('-id')
+
+	page_no = int(request.GET.get('page_no', 1))
+	all_articles = Article.objects.filter(status=0).order_by('-id')
+	ARTICLE_CNT_1PAGE = 4
+
+# # 手动进行分页
+# 	start_index = (page_no-1)*ARTICLE_CNT_1PAGE
+# 	end_index = page_no*ARTICLE_CNT_1PAGE
+# 	article_objs = Article.objects.filter(status=0).order_by('-id')[start_index:end_index]
+
+# 利用django的分页功能
+	p = Paginator(all_articles, ARTICLE_CNT_1PAGE)
+	page = p.page(page_no)
+	article_objs = page.object_list
+
+	page_cnt = p.num_pages
+	current_no = page_no
+	page_links = [i for i in range(page_no - 5, page_no + 6) if i > 0 & i <= page_cnt]
+	previous_link = page_links[0] - 1
+	next_link = page_links[-1] + 1
+
+	return render(request, 'article_list.html', {'articles': article_objs, 'blocks': block, 'page_cnt': page_cnt,
+	                                             'current_no': current_no, 'previous_link': previous_link,
+	                                             'next_link': next_link})
 
 
 # def articles_create(request, block_id):
