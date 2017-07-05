@@ -5,6 +5,7 @@ from django.views.generic import View
 from blocks.models import Block
 from .forms import ArticleForm
 from .models import Article
+from django.core.paginator import Paginator
 
 
 def article_list(request, block_id):
@@ -14,7 +15,7 @@ def article_list(request, block_id):
 
 	page_no = int(request.GET.get('page_no', 1))
 	all_articles = Article.objects.filter(status=0).order_by('-id')
-	ARTICLE_CNT_1PAGE = 2
+	ARTICLE_CNT_1PAGE = 4
 
 # # 手动进行分页
 # 	start_index = (page_no-1)*ARTICLE_CNT_1PAGE
@@ -40,6 +41,7 @@ def article_list(request, block_id):
 	return render(request, 'article_list.html', {'articles': article_objs, 'blocks': block, 'page_cnt': page_cnt,
 	                                             'current_no': current_no, 'page_links': page_links, 'previous_link': previous_link,
 	                                             'next_link': next_link, 'has_previous': has_previous, 'has_next': has_next,})
+
 
 
 # def articles_create(request, block_id):
