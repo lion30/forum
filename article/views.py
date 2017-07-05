@@ -14,7 +14,7 @@ def article_list(request, block_id):
 
 	page_no = int(request.GET.get('page_no', 1))
 	all_articles = Article.objects.filter(status=0).order_by('-id')
-	ARTICLE_CNT_1PAGE = 4
+	ARTICLE_CNT_1PAGE = 2
 
 # # 手动进行分页
 # 	start_index = (page_no-1)*ARTICLE_CNT_1PAGE
@@ -28,13 +28,18 @@ def article_list(request, block_id):
 
 	page_cnt = p.num_pages
 	current_no = page_no
-	page_links = [i for i in range(page_no - 5, page_no + 6) if i > 0 & i <= page_cnt]
+	# print('current_no=', current_no)
+	page_links = [i for i in range(page_no - 5, page_no + 6) if i > 0 and i <= page_cnt]
+	# print('page_links=',list(page_links))
 	previous_link = page_links[0] - 1
 	next_link = page_links[-1] + 1
+	has_previous = 1 if previous_link > 0 else 0
+	print('has_previous:',has_previous)
+	has_next = [1 if next_link <= page_cnt else 0]
 
 	return render(request, 'article_list.html', {'articles': article_objs, 'blocks': block, 'page_cnt': page_cnt,
-	                                             'current_no': current_no, 'previous_link': previous_link,
-	                                             'next_link': next_link})
+	                                             'current_no': current_no, 'page_links': page_links, 'previous_link': previous_link,
+	                                             'next_link': next_link, 'has_previous': has_previous, 'has_next': has_next,})
 
 
 # def articles_create(request, block_id):

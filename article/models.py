@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from blocks.models import Block
 import pytz
@@ -5,6 +6,7 @@ import pytz
 BEIJING_TZ = pytz.timezone('Asia/Shanghai')
 
 class Article(models.Model):
+	owner = models.ForeignKey(User, verbose_name='作者')
 	block = models.ForeignKey(Block, verbose_name='版块ID')
 	title = models.CharField('模块名称', max_length=100)
 	content = models.CharField('模块描述', max_length=100)
