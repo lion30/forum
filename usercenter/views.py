@@ -1,6 +1,9 @@
-from django.shortcuts import render
+import os
+
+from django.shortcuts import render, redirect
 from .models import ActivateCode
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 
 def activate(request,code):
@@ -12,3 +15,22 @@ def activate(request,code):
 		return render(request, 'success_hint.html',{'msg':'激活成功', 'hint':'去登录', 'link':'#'})
 	else:
 		return render(request, 'success_hint.html',{'msg':'激活失败'})
+
+
+@login_required
+def upload_avatar(request):
+	if request.method == "GET":
+		return render(request, "upload_avatar.html")
+	else:
+		profile = request.user.userprofile
+		avatar_file = request.FILES.get("avatar", None)
+		file_path = os.path.join("/usr/share/userres/avatars/", avatar_file.name)
+		with open(file_path, 'wb+') as destination:
+			for chunk in avatar_file.chunks():
+				destination.write(chunk)
+		url = "http://res.myforum.com/avatars/%s" % avatar_file.name
+		profile.avatar = url
+		profile.save()
+		return redirect("/index")
+
+

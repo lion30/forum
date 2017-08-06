@@ -8,21 +8,104 @@
 <body>
 {% extends 'base.html' %}
 {% block content %}
-<table class="table table-bordered">
-<tbody>
-{% for aid in aids %}
+<div class="col-xs-12 col-md-12"></div>
     <ol class="breadcrumb">
-        <li><a href="/index">主页</a></li>
-        <li><a class="active" href="/article/list/{{ item.id }}">{{ aid.name }}</a></li>
-        <li>{{ aid.title }}</li>
+        <li><a href="/">首页</a></li>
+        <li><a href="/article/list/{{ article.block.id }}">{{ article.block.name }}</a></li>
+        <li class="active">{{ article.title }}</li>
     </ol>
-    <h5>作者：{{ aid.title }}</h5>
-    <h1>{{ aid.title }}</h1>
-    <h5>{{ aid.content }}</h5>
-{% endfor %}
-</tbody>
+    <table class="table table-bordered">
+        <tr>
+            <td style="width: 200px">
+                作者:{{ article.owner.username }}
+            </td>
+            <td>
+                <h2>{{ article.title }}</h2>
+                {% autoescape off %}
+                <div>{{ article.content }}</div>
+                {% endautoescape %}
+            </td>
+        </tr>
+        {% for comment in comments %}
+            <tr>
+                <td style="width: 200px">
+                    作者：{{ comment.owner.username }}
+                </td>
+                <td>
+                    <a href="#replyRegion" data-id="{{ comment.id }}" class="replyBtn btn btn-primary pull-right">
+                        回复
+                    </a>
+                    {% if comment.to_comment %}
+                        <blockquote>
+                            <b>{{ comment.to_comment.owner.uername }}:</b>
+                            <br />
+                            {{ comment.to_comment.content|linebreaksbr }}
+                        </blockquote>
+                    {% endif %}
+                    {{ comment.content|linebreaksbr }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% include 'component/paginator.html' %}
+    <table id="replyRegion" class="table mainTable">
+        <tr>
+            <td class="author">
+                <br />
+                <center>作者：{{ user.username }}</center>
+            </td>
+            <td class="content">
+                <textarea class="form-control" id="commentContent" rows="3"> </textarea>
+                <br />
+                <button class="btn btn-primary" id="commentBtn">发表评论</button>
+                <br />
+                <br />
+            </td>
+        </tr>
+    </table>
+    <style type="text/css">
+    .mainTable td.author{
+        width: 10%;
+    }
+    .mainTable td.content{
+        width:87%;
+    }
+    blockquote{
+        font-size: 13px;
+    }
+    img{
+        max-width: 200px;
+    }
+    </style>
+    <script type="text/javascript" src="/static/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.csrf.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var article_id = {{ article.id }};
+      var page_cnt = {{ pagination_data.page_cnt }};
+      var to_comment_id = 0;
 
-</table>
+      $(".replyBtn").click(function (e) {
+        to_comment_id = parseInt($(e.target).attr("data-id"));
+        $("#commentContent").focus();
+        return false;
+      });
+
+      $("#commentBtn").click(function () {
+        var comment = $("#commentContent").val();
+        var param = {"article_id": article_id, "content": comment, "to_comment_id": to_comment_id};
+        $.post("/comment/create/", param, function (data) {
+          var ret = JSON.parse(data);
+          if (ret["status"] == "ok") {
+              $("#commentContent").val("");
+              window.location.href = "/article/articledetail/{{ article.id }}?page_no=" + (page_cnt + 1);
+          } else {
+              alert(ret["msg"]);
+          }
+        });
+      })
+    });
+    </script>
 {% endblock %}
 </body>
 </html>

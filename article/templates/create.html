@@ -10,7 +10,7 @@
 {% block content %}
     {% for item in blocks %}
         <ol class="breadcrumb">
-          <li><a href="/index">主页</a></li>
+          <li><a href="/">主页</a></li>
           <li><a class="active" href="/article/list/{{ item.id }}">{{ item.name }}</a></li>
           <li>发表文章</li>
         </ol>
@@ -24,14 +24,18 @@
           <div class="form-group">
             <label  class="col-sm-2 control-label">内容</label>
             <div class="col-sm-10">
-              <textarea class="form-control" rows="3" name="content">
-                  {{ form.content.value }}
-              </textarea>
+                <script type="text/javascript" src="/static/ueditor/ueditor.config.js"></script>
+                <script type="text/javascript" src="/static/ueditor/ueditor.all.js"></script>
+                <script id="container" name="content" type="text/plain"></script>
+                <input type="hidden" name="content" id="contentInput" />
+{#              <textarea class="form-control" rows="3" name="content">#}
+{#                  {{ form.content.value }}#}
+{#              </textarea>#}
             </div>
           </div>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <button type="submit" class="btn btn-default">发表</button>
+              <button type="submit" class="btn btn-default" onclick="setContent()">发表</button>
             </div>
           </div>
           {% for field in form %}
@@ -41,11 +45,14 @@
                   {% endfor %}
               {% endif %}
           {% endfor %}
-{#        {% if error %}#}
-{#            <div class="alert alert-danger">{{ error }}</div>#}
-{#        {% endif %}#}
         </form>
     {% endfor %}
+    <script type="text/javascript">
+        var ue = UE.getEditor('container');
+        function setContent() {
+            document.getElementById('contentInput').value = ue.getContent();
+        }
+    </script>
 {% endblock %}
 </body>
 </html>

@@ -20,7 +20,24 @@
         {% endfor %}
     </div>
     <div class="col-xs-12 col-md-2">
-        <div class="well">团队建设</div>
+        <div class="well">
+            {% if user.is_authenticated %}
+                <p>{{ user.username }},欢迎来到论坛.</p>
+                <a href="/accounts/logout">登出</a>&nbsp;<a href="/accounts/password_change/">修改密码</a>
+                {% if msg_cnt %}
+                    <a href="/message/list"><span class="badge">{{ msg_cnt }}</span></a>
+                {% endif %}
+                {% if user.userprofile.avatar %}
+                    <img src="{{ user.userprofile.avatar }}" alt="头像文字" style="width: 100%; height: 150px;" />
+                {% else %}
+                    <a href="/usercenter/uploadavatar/">
+                    您还没有头像，去上传
+                    </a>
+                {% endif %}
+            {% else %}
+                <p>匿名用户，请<a href="/accounts/login">登陆</a></p>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
 </body>

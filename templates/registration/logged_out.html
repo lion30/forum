@@ -2,9 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>登出</title>
+    <link rel="stylesheet" href="/static/bootstrap.min.css" />
 </head>
 <body>
-$END$
+{% extends 'base.html' %}
+{% block content %}
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-6">
+        <h2>登出成功</h2>
+        <a href="/accounts/login">重新登陆？</a>
+    </div>
+    <div class="col-md-3">
+
+    </div>
+{% endblock %}
 </body>
 </html>

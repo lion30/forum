@@ -11,10 +11,16 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import configparser
+from .secret import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# load the config.ini file
+config = configparser.ConfigParser()
+config_path = os.path.join(os.path.dirname(BASE_DIR), "conf/config.ini")
+config.read(config_path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -23,9 +29,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '6fvei8@=cahdbasiprv=va)%pm9dw)64y!bv73f&o9j+x9!jy*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config["default"].getboolean("debug")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "47.93.21.99"]
 
 
 # Application definition
@@ -37,8 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blocks',
-	'article',
+    'blocks.apps.BlocksConfig',
+    'article.apps.ArticleConfig',
+    'usercenter.apps.UsercenterConfig',
+    'comment.apps.CommentConfig',
+    'message.apps.MessageConfig',
 ]
 
 MIDDLEWARE = [
@@ -121,5 +130,45 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, "dist_static")
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),
+                    os.path.join(BASE_DIR, 'DjangoUeditor/static'))
+
+
+LOGIN_REDIRECT_URL = '/'
+
+
+MEDIA_ROOT = "/usr/share/userres/article/"
+MEDIA_URL = config["default"]["media_base_url"]
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(message)s'
+        },
+    },
+    'handlers': {
+        'info_record': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(os.path.dirname(BASE_DIR), 'log/info.log'),
+            'formatter': 'verbose'
+            },
+        'error_record': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(os.path.dirname(BASE_DIR), "log/error.log"),
+            'formatter': 'verbose'
+            },
+        },
+    'loggers': {
+        'forum': {
+            'handlers': ["info_record", "error_record"],
+            'level': "DEBUG",
+        }
+    }
+}

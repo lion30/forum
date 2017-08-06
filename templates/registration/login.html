@@ -2,9 +2,65 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>注册</title>
+    <link rel="stylesheet" href="/static/bootstrap.min.css" />
 </head>
 <body>
-$END$
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="col-md-12">
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+        {% if form.usernames.errors %}
+            {% for error in form.usernames.errors%}
+                <div class="alert alert-danger">用户名：{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+        {% if form.password.errors %}
+            {% for error in form.password.errors%}
+                <div class="alert alert-danger">密码：{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-info">
+            <div class="panel panel-heading">
+                <b>登陆</b>
+            </div>
+            <div class="panel panel-body">
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <span class="input-group-addon">用户名</span>
+                        <input class="form-control" id="id_username" maxlength="254" name="username" type="text" />
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <span class="input-group-addon">密码</span>
+                        <input class="form-control" id="id_password" name="password" type="password" />
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <input class="btn btn-primary" type="submit" value="登陆"/>
+                        <input type="hidden" name="next" value="{{ next }}"/>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-footer">
+                <a href="/register">还没有账户？去注册。。。</a>
+                <a class="pull-right" href="/accounts/password_reset">忘记密码？</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+
+    </div>
+{% endblock %}
 </body>
-</html>

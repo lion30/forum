@@ -18,12 +18,21 @@ import django
 from django.conf.urls import url, include
 from django.contrib import admin
 from forum.views import htmltemplate, index, register, test
+from usercenter.views import activate
 
 urlpatterns = [
 	url(r'^admin/', admin.site.urls),
 	url(r'^htmltemplate/$', htmltemplate),
-	url(r'^index/$', index),
+	url(r'^$', index),
 	url(r'^article/',include('article.urls')),
+	url(r'^comment/',include('comment.urls')),
+	url(r'^message/',include('message.urls')),
 	url(r'^register/$', register),
-	url(r'^test/$', test)
+	url(r'^test/$', test),
+	url(r'^activate/(?P<code>\w+)$', activate),
+	url(r'^accounts/', include('django.contrib.auth.urls')),
+	url(r'^usercenter/', include('usercenter.urls')),
+	url(r'^ueditor/', include('DjangoUeditor.urls'))
 ]
+
+admin.site.disable_action('delete_selected')

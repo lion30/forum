@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>消息列表</title>
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+</head>
+<body>
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-sm-12">
+    <ul class="list-group">
+         {% for msg in unread_messages %}
+             <li class="list-group-item">
+                 <a href="/message/read/{{ msg.id }}">{{ msg.content }}</a>
+             </li>
+         {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+</body>
+</html>

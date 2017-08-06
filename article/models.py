@@ -10,7 +10,7 @@ class Article(models.Model):
 	block = models.ForeignKey(Block, verbose_name='版块ID')
 	title = models.CharField('模块名称', max_length=100)
 	content = models.CharField('模块描述', max_length=100)
-	status = models.IntegerField('状态', choices=((0, '正常'), (1, '删除')))
+	status = models.IntegerField('状态', choices=((0, '正常'), (1, '删除'),(10, '精华')))
 
 	create_timestamp = models.DateTimeField('创建时间', auto_now_add=True)
 	last_update_timestamp = models.DateTimeField('修改时间', auto_now=True)
