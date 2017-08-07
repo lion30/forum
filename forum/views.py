@@ -8,6 +8,7 @@ from blocks.models import Block
 from usercenter.models import ActivateCode
 from message.models import Usermessage
 
+
 def htmltemplate(request):
 	return render(request, "htmltemplate.html")
 
