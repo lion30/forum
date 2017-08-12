@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import View ,DetailView
+from django.views.generic import View, DetailView
 
 from blocks.models import Block
 from .forms import ArticleForm
