@@ -12,9 +12,9 @@ def activate(request, code):
 		code_record = query[0]
 		code_record.owner.is_active = True
 		code_record.owner.save()
-		return render(request, 'success_hint.html',{'msg':'激活成功', 'hint':'去登录', 'link': '#'})
+		return render(request, 'success_hint.html', {'msg':'激活成功', 'hint':'去登录', 'link': '/'})
 	else:
-		return render(request, 'success_hint.html',{'msg':'激活失败'})
+		return render(request, 'success_hint.html', {'msg':'激活失败'})
 
 
 @login_required
@@ -28,9 +28,9 @@ def upload_avatar(request):
 		with open(file_path, 'wb+') as destination:
 			for chunk in avatar_file.chunks():
 				destination.write(chunk)
-		url = "http://res.myforum.com/avatars/%s" % avatar_file.name
+		url = "http://%s/avatars/%s" % (request.get_host(), avatar_file.name)
 		profile.avatar = url
 		profile.save()
-		return redirect("/index")
+		return redirect("/")
 
 
