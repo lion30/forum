@@ -2,14 +2,14 @@ from django.core.paginator import Paginator
 
 
 def paginate_queryset(objs, page_no, cnt_per_page=5, half_show_length=5):
-	p = Paginator(objs, cnt_per_page)   #分页功能的实例化
-	if page_no > p.num_pages:   #判断页数是否超过最大页数
+	p = Paginator(objs, cnt_per_page)  # 分页功能的实例化，输入参数objs为所有的文章对象，cnt_per_page为每页显示的文章数量
+	if page_no > p.num_pages:  # 判断页数是否超过最大页数，如果当前页数超过最小页数则显示最大页数
 		page_no = p.num_pages
-	if page_no <= 0:    #判断页数是否小于最小页数
+	if page_no <= 0:  # 判断页数是否小于最小页数，如果当前页数超过最小页数则显示最小页数
 		page_no = 1
 	page_links = [i for i in range(page_no - half_show_length, page_no + half_show_length + 1)
 	              if i > 0 and i <= p.num_pages]
-	page = p.page(page_no)
+	page = p.page(page_no)  # 每页的显示文章数量，是列表格式
 	previous_link = page_links[0] - 1
 	next_link = page_links[-1] + 1
 	pagination_data = {'has_previous': previous_link>0, #有前页在views中做计算

@@ -14,25 +14,25 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 
-import django
 from django.conf.urls import url, include
 from django.contrib import admin
+
 from forum.views import htmltemplate, index, register, test
 from usercenter.views import activate
 
 urlpatterns = [
-	url(r'^admin/', admin.site.urls),
-	url(r'^htmltemplate/$', htmltemplate),
-	url(r'^$', index),
-	url(r'^article/',include('article.urls')),
-	url(r'^comment/',include('comment.urls')),
-	url(r'^message/',include('message.urls')),
-	url(r'^register/$', register),
-	url(r'^test/$', test),
-	url(r'^activate/(?P<code>\w+)$', activate),
-	url(r'^accounts/', include('django.contrib.auth.urls')),
-	url(r'^usercenter/', include('usercenter.urls')),
-	url(r'^ueditor/', include('DjangoUeditor.urls'))
+	url(r'^admin/', admin.site.urls),  # admin后台
+	url(r'^htmltemplate/$', htmltemplate),  # 自己设置的template样式页面
+	url(r'^$', index),  # 论坛首页
+	url(r'^article/', include('article.urls')),  # 文章子URL
+	url(r'^comment/', include('comment.urls')),  # 文章评论子URL
+	url(r'^message/', include('message.urls')),  # 消息系统子URL
+	url(r'^register/$', register),  # 注册系统
+	url(r'^test/$', test),  # 测试连接
+	url(r'^activate/(?P<code>\w+)$', activate),  # 注册时带有激活码的激活连接页面
+	url(r'^accounts/', include('django.contrib.auth.urls')),  # 用户登录页面URL
+	url(r'^usercenter/', include('usercenter.urls')),  # 用户中心子URL
+	url(r'^ueditor/', include('DjangoUeditor.urls'))  # 富文本编辑器子URL
 ]
 
-admin.site.disable_action('delete_selected')
+admin.site.disable_action('delete_selected')  # 禁用删除功能

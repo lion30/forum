@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="/static/bootstrap.min.css">
 </head>
 <body>
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {# 延伸base.html这个基础页面 #}
+{% block content %} {# 编写本页面内容 #}
     <div class="col-xs-12 col-md-10">
         {% for b in blocks %}
             <div class="panel panel-default">

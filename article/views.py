@@ -2,18 +2,18 @@ from django.shortcuts import render, redirect
 from django.views.generic import View, DetailView
 
 from blocks.models import Block
-from .forms import ArticleForm
-from .models import Article
 from comment.models import Comment
 from utils.paginator import paginate_queryset
+from .forms import ArticleForm
+from .models import Article
 
 
 def article_list(request, block_id):
 	block_id = int(block_id)
 	blocks = Block.objects.get(id=block_id)
-	page_no = int(request.GET.get('page_no','1'))
-	all_articles = Article.objects.filter(block=blocks,status=0).order_by('-id')
-	page_articles,pagination_data = paginate_queryset(all_articles, page_no)
+	page_no = int(request.GET.get('page_no', '1'))  # 获取当前页面
+	all_articles = Article.objects.filter(block=blocks, status=0).order_by('-id')  # 从文章数据库中获取所有文章
+	page_articles, pagination_data = paginate_queryset(all_articles, page_no)  # 将所有文章列表及当前页面传递至分页函数
 	return render(request, 'article_list.html', {'blocks':blocks,
 	                                             'articles':page_articles,
 	                                             'pagination_data': pagination_data})
@@ -21,24 +21,17 @@ def article_list(request, block_id):
 
 
 class ArticleCreateView(View):
-
 	template_name = 'create.html'
-
+	
 	def init_data(self, block_id):
 		self.block_id = int(block_id)
 		self.block = Block.objects.filter(id=self.block_id)
 
 	def get(self, request, block_id):
-		# #提取成init_data
-		# block_id = int(block_id)
-		# block = Block.objects.filter(id=block_id)
 		self.init_data(block_id)
 		return render(request, self.template_name, {'blocks': self.block})
 
 	def post(self, request, block_id):
-		# #下面两行代码get函数也有，因此需进行提取
-		# block_id = int(block_id)
-		# block = Block.objects.filter(id=block_id)
 		self.init_data(block_id)
 		form = ArticleForm(request.POST)
 		if form.is_valid():

@@ -26,7 +26,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for article in articles %}
+        {% for article in articles %}   {# 页面文章显示 #}
                 <tr>
                     <td><a href="/article/articledetail/{{ article.id }}">{{ article.title }}</a></td>
                     <td>{{ article.content }}</td>
@@ -36,7 +36,7 @@
             {% endfor %}
         </tbody>
     </table>
-    {% include 'component/paginator.html' %}
+	{% include 'component/paginator.html' %}    {# 显示分页数据及样式 #}
 
 {% endblock %}
 </body>

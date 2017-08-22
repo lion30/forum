@@ -1,12 +1,14 @@
-import uuid
 import datetime
+import uuid
+
 from django.contrib.auth.models import User
-from django.shortcuts import render, HttpResponse
 from django.core.mail import send_mail
+from django.shortcuts import render, HttpResponse
 from django.utils import timezone
+
 from blocks.models import Block
-from usercenter.models import ActivateCode
 from message.models import Usermessage
+from usercenter.models import ActivateCode
 
 
 def htmltemplate(request):
@@ -19,7 +21,7 @@ def index(request):
 		msg_cnt = Usermessage.objects.filter(status=0, owner=request.user).count()
 	else:
 		msg_cnt = 0
-	return render(request, "index.html",{'blocks':block_infos, 'msg_cnt': msg_cnt})
+	return render(request, "index.html", {'blocks': block_infos, 'msg_cnt': msg_cnt})
 
 
 def register(request):

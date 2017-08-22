@@ -1,7 +1,8 @@
+import pytz
 from django.contrib.auth.models import User
 from django.db import models
+
 from blocks.models import Block
-import pytz
 
 BEIJING_TZ = pytz.timezone('Asia/Shanghai')
 

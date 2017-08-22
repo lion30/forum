@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>注册</title>
+	<title>用户登陆</title>
     <link rel="stylesheet" href="/static/bootstrap.min.css" />
 </head>
 <body>
@@ -32,7 +32,7 @@
     <div class="col-md-6">
         <div class="panel panel-info">
             <div class="panel panel-heading">
-                <b>登陆</b>
+	            <b>登录</b>
             </div>
             <div class="panel panel-body">
                 <form method="post" action="{% url 'login' %}">
@@ -49,7 +49,7 @@
                     <br />
                     <div class="input-group">
                         <input class="btn btn-primary" type="submit" value="登陆"/>
-                        <input type="hidden" name="next" value="{{ next }}"/>
+	                    {#                        <input type="hidden" name="next" value="{{ next }}"/>#}
                     </div>
                 </form>
             </div>
