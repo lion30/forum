@@ -30,9 +30,10 @@ urlpatterns = [
 	url(r'^register/$', register),  # 注册系统
 	url(r'^test/$', test),  # 测试连接
 	url(r'^activate/(?P<code>\w+)$', activate),  # 注册时带有激活码的激活连接页面
-	url(r'^accounts/', include('django.contrib.auth.urls')),  # 用户登录页面URL
+	url(r'^accounts/', include('django.contrib.auth.urls')),  # 用户登录页面,修改密码页面，密码重置页面URL
 	url(r'^usercenter/', include('usercenter.urls')),  # 用户中心子URL
-	url(r'^ueditor/', include('DjangoUeditor.urls'))  # 富文本编辑器子URL
+	url(r'^ueditor/', include('DjangoUeditor.urls')) , # 富文本编辑器子URL
+	url(r'^vis/', include('myfirstvis.urls'))
 ]
 
 admin.site.disable_action('delete_selected')  # 禁用删除功能

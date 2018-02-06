@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'usercenter.apps.UsercenterConfig',
     'comment.apps.CommentConfig',
     'message.apps.MessageConfig',
+    'myfirstvis',
 ]
 
 MIDDLEWARE = [
